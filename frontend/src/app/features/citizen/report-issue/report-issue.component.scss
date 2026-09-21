@@ -1,0 +1,55 @@
+.cp-report-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+}
+
+.cp-stepper {
+  padding: 8px;
+  margin-top: 16px;
+}
+
+.cp-step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 4px;
+}
+
+.cp-full-width {
+  width: 100%;
+}
+
+.cp-step-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cp-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.cp-duplicates-warning {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  border-color: #ffb74d;
+
+  ul {
+    margin: 6px 0 0;
+    padding-left: 18px;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+}

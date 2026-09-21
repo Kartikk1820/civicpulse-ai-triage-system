@@ -1,0 +1,48 @@
+.cp-feed-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+}
+
+.cp-feed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.cp-filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.cp-filter-field {
+  min-width: 160px;
+}
+
+.cp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.cp-loading,
+.cp-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 60px 0;
+  color: var(--cp-text-muted);
+}
+
+.cp-empty mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}

@@ -1,0 +1,43 @@
+<div class="cp-profile-page">
+  <mat-card class="cp-card cp-profile-card">
+    <div class="cp-profile-header">
+      <div class="cp-avatar">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <div>
+        <h2>{{ auth.currentUser?.username }}</h2>
+        <p class="cp-muted">{{ auth.currentUser?.role | titlecase }} · {{ auth.currentUser?.points }} points</p>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <mat-form-field appearance="outline" class="cp-full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="cp-full-width">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="phone" />
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" type="submit" [disabled]="saving">Save Changes</button>
+    </form>
+
+    <div class="cp-badges-section">
+      <h3>Badges Earned</h3>
+      @if (myBadges.length === 0) {
+        <p class="cp-muted">Report and help resolve issues to earn your first badge.</p>
+      } @else {
+        <div class="cp-badge-row">
+          @for (eb of myBadges; track eb.id) {
+            <div class="cp-badge" [class]="'tier-' + eb.badge.tier" [matTooltip]="eb.badge.description">
+              <mat-icon>{{ eb.badge.icon || 'military_tech' }}</mat-icon>
+              <span>{{ eb.badge.name }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </mat-card>
+</div>

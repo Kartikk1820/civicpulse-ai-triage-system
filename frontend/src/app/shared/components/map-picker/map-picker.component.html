@@ -1,0 +1,18 @@
+<div class="cp-map-picker-wrap">
+  <div [id]="elementId" class="cp-map-picker"></div>
+  <button
+    mat-mini-fab
+    color="primary"
+    class="cp-locate-btn"
+    (click)="useMyLocation()"
+    [disabled]="locating"
+    aria-label="Use my location"
+  >
+    @if (locating) {
+      <mat-spinner diameter="20" color="accent"></mat-spinner>
+    } @else {
+      <mat-icon>my_location</mat-icon>
+    }
+  </button>
+</div>
+<p class="cp-hint cp-muted">Tap the map or drag the pin to set the exact location.</p>

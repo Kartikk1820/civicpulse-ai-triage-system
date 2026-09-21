@@ -1,0 +1,59 @@
+<div class="cp-feed-page">
+  <div class="cp-feed-header">
+    <div>
+      <h1>Community Feed</h1>
+      <p class="cp-muted">Live reports from citizens near you.</p>
+    </div>
+    <a mat-flat-button color="primary" routerLink="/report">
+      <mat-icon>add</mat-icon>
+      Report an Issue
+    </a>
+  </div>
+
+  <div class="cp-filters">
+    <mat-form-field appearance="outline" class="cp-filter-field">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="filters.status" (selectionChange)="load()">
+        <mat-option [value]="undefined">All</mat-option>
+        @for (s of statusOptions; track s.value) {
+          <mat-option [value]="s.value">{{ s.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="cp-filter-field">
+      <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]="filters.category" (selectionChange)="load()">
+        <mat-option [value]="undefined">All</mat-option>
+        @for (c of categories; track c.id) {
+          <mat-option [value]="c.id">{{ c.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="cp-filter-field">
+      <mat-label>Sort by</mat-label>
+      <mat-select [(ngModel)]="filters.ordering" (selectionChange)="load()">
+        <mat-option value="-created_at">Newest</mat-option>
+        <mat-option value="-upvote_count">Most upvoted</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  @if (loading) {
+    <div class="cp-loading">
+      <mat-spinner diameter="36"></mat-spinner>
+    </div>
+  } @else if (issues.length === 0) {
+    <div class="cp-empty cp-card">
+      <mat-icon>inbox</mat-icon>
+      <p>No issues match your filters yet.</p>
+    </div>
+  } @else {
+    <div class="cp-grid">
+      @for (issue of issues; track issue.id) {
+        <app-issue-card [issue]="issue" (upvoted)="onUpvoted($event)"></app-issue-card>
+      }
+    </div>
+  }
+</div>

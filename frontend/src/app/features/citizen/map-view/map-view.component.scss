@@ -1,0 +1,26 @@
+.cp-map-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: calc(100vh - 64px);
+}
+
+.cp-map-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.cp-filter-field {
+  width: 200px;
+}
+
+.cp-map-canvas {
+  flex: 1 1 auto;
+  min-height: 420px;
+  overflow: hidden;
+}

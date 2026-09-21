@@ -1,0 +1,39 @@
+<mat-card class="cp-auth-card cp-card">
+  <div class="cp-auth-header">
+    <mat-icon>location_city</mat-icon>
+    <h2>Welcome back</h2>
+    <p class="cp-muted">Log in to report and track civic issues.</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline" class="cp-full-width">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" autocomplete="username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="cp-full-width">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [type]="hidePassword ? 'password' : 'text'"
+        formControlName="password"
+        autocomplete="current-password"
+      />
+      <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" type="submit" class="cp-submit-btn" [disabled]="loading">
+      @if (loading) {
+        <mat-spinner diameter="20"></mat-spinner>
+      } @else {
+        Log in
+      }
+    </button>
+  </form>
+
+  <p class="cp-auth-footer cp-muted">
+    New here? <a routerLink="/auth/register">Create an account</a>
+  </p>
+</mat-card>

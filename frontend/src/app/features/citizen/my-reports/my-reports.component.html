@@ -1,0 +1,30 @@
+<div class="cp-feed-page">
+  <div class="cp-feed-header">
+    <div>
+      <h1>My Reports</h1>
+      <p class="cp-muted">Track the status of issues you've reported.</p>
+    </div>
+    <a mat-flat-button color="primary" routerLink="/report">
+      <mat-icon>add</mat-icon>
+      Report an Issue
+    </a>
+  </div>
+
+  @if (loading) {
+    <div class="cp-loading">
+      <mat-spinner diameter="36"></mat-spinner>
+    </div>
+  } @else if (issues.length === 0) {
+    <div class="cp-empty cp-card">
+      <mat-icon>assignment</mat-icon>
+      <p>You haven't reported any issues yet.</p>
+      <a mat-flat-button color="primary" routerLink="/report">Report your first issue</a>
+    </div>
+  } @else {
+    <div class="cp-grid">
+      @for (issue of issues; track issue.id) {
+        <app-issue-card [issue]="issue"></app-issue-card>
+      }
+    </div>
+  }
+</div>

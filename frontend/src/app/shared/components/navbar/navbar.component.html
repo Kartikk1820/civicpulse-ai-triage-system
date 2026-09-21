@@ -1,0 +1,62 @@
+<mat-toolbar class="cp-navbar">
+  <a routerLink="/" class="cp-brand">
+    <mat-icon>location_city</mat-icon>
+    <span>CivicPulse</span>
+  </a>
+
+  <span class="cp-spacer"></span>
+
+  @if (auth.isAuthenticated) {
+    <nav class="cp-links">
+      <a mat-button routerLink="/feed" routerLinkActive="active">Feed</a>
+      <a mat-button routerLink="/map" routerLinkActive="active">Map</a>
+      <a mat-button routerLink="/report" routerLinkActive="active">Report</a>
+      <a mat-button routerLink="/my-reports" routerLinkActive="active">My Reports</a>
+      <a mat-button routerLink="/leaderboard" routerLinkActive="active">Leaderboard</a>
+      @if (auth.isAdmin) {
+        <a mat-button routerLink="/admin" routerLinkActive="active">Admin</a>
+      }
+    </nav>
+
+    <button mat-icon-button [matMenuTriggerFor]="notifMenu" aria-label="Notifications">
+      <mat-icon [matBadge]="notifications.unreadCount || null" matBadgeColor="warn" matBadgeSize="small">
+        notifications
+      </mat-icon>
+    </button>
+    <mat-menu #notifMenu="matMenu" class="cp-notif-menu">
+      @if ((notifications.notifications$ | async)?.length === 0) {
+        <div class="cp-notif-empty">No notifications yet</div>
+      }
+      @for (n of (notifications.notifications$ | async); track n.id) {
+        <button mat-menu-item (click)="markRead(n.id)" [class.unread]="!n.is_read">
+          {{ n.message }}
+        </button>
+      }
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="userMenu" aria-label="Account">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <a mat-menu-item routerLink="/profile">
+        <mat-icon>person</mat-icon>
+        <span>{{ auth.currentUser?.username }} ({{ auth.currentUser?.points }} pts)</span>
+      </a>
+      <button mat-menu-item (click)="theme.toggle()">
+        <mat-icon>{{ (theme.isDark$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        <span>{{ (theme.isDark$ | async) ? 'Light mode' : 'Dark mode' }}</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  } @else {
+    <button mat-icon-button (click)="theme.toggle()" aria-label="Toggle theme">
+      <mat-icon>{{ (theme.isDark$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+    <a mat-button routerLink="/auth/login">Login</a>
+    <a mat-flat-button color="primary" routerLink="/auth/register">Sign up</a>
+  }
+</mat-toolbar>

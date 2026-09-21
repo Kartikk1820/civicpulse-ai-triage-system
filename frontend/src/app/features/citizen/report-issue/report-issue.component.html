@@ -1,0 +1,95 @@
+<div class="cp-report-page">
+  <h1>Report a Civic Issue</h1>
+  <p class="cp-muted">Snap a photo, pin the location, and we'll route it to the right department.</p>
+
+  <mat-stepper orientation="horizontal" linear class="cp-card cp-stepper" #stepper>
+    <mat-step label="Photos">
+      <div class="cp-step-body">
+        <app-image-uploader [maxFiles]="3" (filesChanged)="onPhotosChanged($event)"></app-image-uploader>
+        <p class="cp-hint cp-muted">
+          <mat-icon inline>auto_awesome</mat-icon>
+          Our AI will suggest a category and severity from your photo automatically.
+        </p>
+        <div class="cp-step-actions">
+          <button mat-flat-button color="primary" matStepperNext [disabled]="photos.length === 0">Next</button>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step label="Location" [stepControl]="locationForm">
+      <div class="cp-step-body">
+        <app-map-picker (locationChange)="onLocationChange($event)"></app-map-picker>
+
+        <mat-form-field appearance="outline" class="cp-full-width">
+          <mat-label>Address</mat-label>
+          <input matInput [formControl]="locationForm.controls.address" />
+          @if (geocoding) {
+            <mat-spinner matSuffix diameter="18"></mat-spinner>
+          }
+        </mat-form-field>
+
+        @if (checkingDuplicates) {
+          <p class="cp-hint cp-muted"><mat-spinner diameter="14"></mat-spinner> Checking for similar reports nearby…</p>
+        }
+
+        @if (duplicates.length > 0) {
+          <div class="cp-duplicates-warning cp-card">
+            <mat-icon color="warn">report_problem</mat-icon>
+            <div>
+              <strong>Similar issues already reported nearby.</strong>
+              <p class="cp-muted">Upvote instead to avoid duplicates, or continue if this is different.</p>
+              <ul>
+                @for (d of duplicates; track d.id) {
+                  <li>
+                    {{ d.title }} ({{ d.distance_m | number: '1.0-0' }}m away, {{ d.upvote_count }} upvotes)
+                    <button mat-button color="primary" (click)="upvoteExisting(d.id)">Upvote this instead</button>
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+
+        <div class="cp-step-actions">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-flat-button color="primary" matStepperNext [disabled]="!selectedLocation">Next</button>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step label="Details" [stepControl]="detailsForm">
+      <form [formGroup]="detailsForm" class="cp-step-body">
+        <mat-form-field appearance="outline" class="cp-full-width">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" placeholder="e.g. Large pothole blocking left lane" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="cp-full-width">
+          <mat-label>Description (optional)</mat-label>
+          <textarea matInput formControlName="description" rows="3"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="cp-full-width">
+          <mat-label>Category (optional — AI will suggest one)</mat-label>
+          <mat-select formControlName="category">
+            <mat-option [value]="null">Let AI decide</mat-option>
+            @for (c of categories; track c.id) {
+              <mat-option [value]="c.id">{{ c.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <div class="cp-step-actions">
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-flat-button color="primary" type="button" (click)="submit()" [disabled]="submitting">
+            @if (submitting) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              Submit Report
+            }
+          </button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</div>

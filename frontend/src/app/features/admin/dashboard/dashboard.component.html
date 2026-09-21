@@ -1,0 +1,73 @@
+<div class="cp-admin-page">
+  <div class="cp-admin-header">
+    <h1>Admin Dashboard</h1>
+    <nav class="cp-admin-nav">
+      <a routerLink="/admin" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">Overview</a>
+      <a routerLink="/admin/issues" routerLinkActive="active">Issues</a>
+      <a routerLink="/admin/departments" routerLinkActive="active">Departments</a>
+      <a routerLink="/admin/categories" routerLinkActive="active">Categories</a>
+    </nav>
+  </div>
+
+  @if (loading) {
+    <div class="cp-loading"><mat-spinner diameter="36"></mat-spinner></div>
+  } @else if (summary) {
+    <div class="cp-kpi-grid">
+      <div class="cp-kpi cp-card">
+        <mat-icon>list_alt</mat-icon>
+        <div>
+          <span class="cp-kpi-value">{{ summary.total }}</span>
+          <span class="cp-muted">Total Issues</span>
+        </div>
+      </div>
+      <div class="cp-kpi cp-card">
+        <mat-icon color="warn">pending_actions</mat-icon>
+        <div>
+          <span class="cp-kpi-value">{{ summary.open }}</span>
+          <span class="cp-muted">Open</span>
+        </div>
+      </div>
+      <div class="cp-kpi cp-card">
+        <mat-icon color="primary">task_alt</mat-icon>
+        <div>
+          <span class="cp-kpi-value">{{ summary.resolved_this_week }}</span>
+          <span class="cp-muted">Resolved This Week</span>
+        </div>
+      </div>
+      <div class="cp-kpi cp-card">
+        <mat-icon>schedule</mat-icon>
+        <div>
+          <span class="cp-kpi-value">{{ summary.avg_resolution_hours ?? '—' }}</span>
+          <span class="cp-muted">Avg Resolution (hrs)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cp-charts-grid">
+      <div class="cp-card cp-chart-card">
+        <h3>Issues by Category</h3>
+        <div class="cp-chart-box">
+          @if (categoryChartData) {
+            <canvas baseChart [data]="categoryChartData" [options]="chartOptions" type="doughnut"></canvas>
+          }
+        </div>
+      </div>
+      <div class="cp-card cp-chart-card">
+        <h3>Issues by Status</h3>
+        <div class="cp-chart-box">
+          @if (statusChartData) {
+            <canvas baseChart [data]="statusChartData" [options]="chartOptions" type="bar"></canvas>
+          }
+        </div>
+      </div>
+      <div class="cp-card cp-chart-card cp-chart-wide">
+        <h3>Reports Trend (30 days)</h3>
+        <div class="cp-chart-box">
+          @if (trendChartData) {
+            <canvas baseChart [data]="trendChartData" [options]="chartOptions" type="line"></canvas>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

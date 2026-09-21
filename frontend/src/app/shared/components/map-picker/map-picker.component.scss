@@ -1,0 +1,24 @@
+.cp-map-picker-wrap {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.cp-map-picker {
+  width: 100%;
+  height: 100%;
+}
+
+.cp-locate-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 1000;
+}
+
+.cp-hint {
+  margin: 6px 0 0;
+  font-size: 0.75rem;
+}

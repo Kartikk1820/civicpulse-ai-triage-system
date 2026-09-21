@@ -1,0 +1,51 @@
+<div class="cp-admin-page">
+  <div class="cp-admin-header">
+    <h1>Categories</h1>
+    <nav class="cp-admin-nav">
+      <a routerLink="/admin" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">Overview</a>
+      <a routerLink="/admin/issues" routerLinkActive="active">Issues</a>
+      <a routerLink="/admin/departments" routerLinkActive="active">Departments</a>
+      <a routerLink="/admin/categories" routerLinkActive="active">Categories</a>
+    </nav>
+  </div>
+
+  <form class="cp-toolbar cp-card" [formGroup]="form" (ngSubmit)="add()">
+    <mat-form-field appearance="outline" class="cp-filter-field">
+      <mat-label>New category name</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="cp-filter-field">
+      <mat-label>Color</mat-label>
+      <input matInput type="color" formControlName="color" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="cp-filter-field">
+      <mat-label>Default department</mat-label>
+      <mat-select formControlName="default_department">
+        <mat-option [value]="null">None</mat-option>
+        @for (d of departments; track d.id) {
+          <mat-option [value]="d.id">{{ d.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <button mat-flat-button color="primary" type="submit">
+      <mat-icon>add</mat-icon>
+      Add
+    </button>
+  </form>
+
+  <div class="cp-table-wrap cp-card">
+    <ul class="cp-list">
+      @for (c of categories; track c.id) {
+        <li>
+          <div>
+            <span class="cp-category-swatch" [style.background]="c.color"></span>
+            <strong>{{ c.name }}</strong>
+          </div>
+          <button mat-icon-button (click)="remove(c.id)" aria-label="Delete category">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+</div>

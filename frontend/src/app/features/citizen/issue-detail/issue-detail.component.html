@@ -1,0 +1,138 @@
+@if (loading) {
+  <div class="cp-loading"><mat-spinner diameter="36"></mat-spinner></div>
+} @else if (issue) {
+  <div class="cp-detail-page">
+    <div class="cp-detail-main">
+      @if (issue.images.length > 0) {
+        <div class="cp-gallery cp-card">
+          @for (img of issue.images; track img.id) {
+            <div class="cp-gallery-item" [class.resolution]="img.image_type === 'resolution'">
+              <img [src]="img.image" [alt]="issue.title" />
+              @if (img.image_type === 'resolution') {
+                <span class="cp-tag">Resolved photo</span>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      <div class="cp-card cp-info">
+        <div class="cp-title-row">
+          <h1>{{ issue.title }}</h1>
+          <app-status-badge [status]="issue.status"></app-status-badge>
+        </div>
+
+        <p class="cp-muted"><mat-icon inline>place</mat-icon> {{ issue.address }}</p>
+        <p>{{ issue.description }}</p>
+
+        <div class="cp-ai-box">
+          @if (!issue.ai_processed) {
+            <div class="cp-ai-analyzing">
+              <mat-spinner diameter="18"></mat-spinner>
+              <span>AI is analyzing this photo…</span>
+            </div>
+          } @else {
+            <div class="cp-ai-result">
+              <mat-icon color="primary">auto_awesome</mat-icon>
+              <div>
+                <strong>AI suggests: {{ issue.ai_category_suggestion }}</strong>
+                <span class="cp-severity-tag" [class]="'sev-' + issue.ai_severity">{{ issue.ai_severity | titlecase }} severity</span>
+                <p class="cp-muted">{{ issue.ai_summary }}</p>
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="cp-actions">
+          <button mat-stroked-button [class.active]="issue.has_upvoted" (click)="toggleUpvote()" [disabled]="upvoting">
+            <mat-icon>{{ issue.has_upvoted ? 'thumb_up' : 'thumb_up_off_alt' }}</mat-icon>
+            {{ issue.upvote_count }} Upvotes
+          </button>
+          <span class="cp-muted"><mat-icon inline>visibility</mat-icon> {{ issue.view_count }} views</span>
+          <span class="cp-muted">Reported by {{ issue.reporter_name }}</span>
+        </div>
+      </div>
+
+      <div class="cp-card cp-timeline">
+        <h3>Status Timeline</h3>
+        <div class="cp-steps">
+          @for (s of statusOrder; track s; let i = $index) {
+            <div class="cp-step" [class.done]="stepIndex(issue.status) >= i">
+              <div class="cp-dot"></div>
+              <span>{{ statusLabels[s] }}</span>
+            </div>
+          }
+        </div>
+
+        <ul class="cp-history">
+          @for (h of issue.status_history; track h.id) {
+            <li>
+              <strong>{{ statusLabel(h.new_status) }}</strong>
+              <span class="cp-muted"> by {{ h.changed_by_name || 'system' }} · {{ h.changed_at | date: 'medium' }}</span>
+              @if (h.note) {
+                <p class="cp-muted">{{ h.note }}</p>
+              }
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="cp-card cp-comments">
+        <h3>Discussion ({{ issue.comments.length }})</h3>
+        <ul class="cp-comment-list">
+          @for (c of issue.comments; track c.id) {
+            <li>
+              <strong>{{ c.user_name }}</strong>
+              <span class="cp-muted"> · {{ c.created_at | date: 'short' }}</span>
+              <p>{{ c.text }}</p>
+            </li>
+          }
+        </ul>
+
+        @if (auth.isAuthenticated) {
+          <div class="cp-comment-form">
+            <mat-form-field appearance="outline" class="cp-full-width">
+              <mat-label>Add a comment</mat-label>
+              <input matInput [(ngModel)]="newComment" (keyup.enter)="postComment()" />
+            </mat-form-field>
+            <button mat-icon-button (click)="postComment()" [disabled]="postingComment || !newComment.trim()">
+              <mat-icon>send</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (auth.isAdmin) {
+      <aside class="cp-card cp-admin-panel">
+        <h3><mat-icon inline>admin_panel_settings</mat-icon> Admin Controls</h3>
+
+        <mat-form-field appearance="outline" class="cp-full-width">
+          <mat-label>Status</mat-label>
+          <mat-select [value]="issue.status" (selectionChange)="updateStatus($event.value)">
+            @for (s of adminStatusChoices; track s) {
+              <mat-option [value]="s">{{ statusLabels[s] }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="cp-full-width">
+          <mat-label>Assign Department</mat-label>
+          <mat-select [value]="issue.assigned_department" (selectionChange)="assignDepartment($event.value)">
+            @for (d of departments; track d.id) {
+              <mat-option [value]="d.id">{{ d.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <label class="cp-upload-resolution">
+          <input type="file" accept="image/*" hidden (change)="uploadResolutionPhoto($event)" />
+          <button type="button" mat-stroked-button>
+            <mat-icon>add_a_photo</mat-icon>
+            Upload Resolution Photo
+          </button>
+        </label>
+      </aside>
+    }
+  </div>
+}

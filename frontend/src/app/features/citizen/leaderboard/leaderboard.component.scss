@@ -1,0 +1,44 @@
+.cp-leaderboard-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+}
+
+.cp-loading {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+}
+
+.cp-board {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 8px;
+}
+
+.cp-board li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+}
+
+.cp-board li.me {
+  background: var(--cp-surface-alt);
+  font-weight: 700;
+}
+
+.cp-rank {
+  width: 40px;
+  font-weight: 700;
+}
+
+.cp-name {
+  flex: 1 1 auto;
+}
+
+.cp-points {
+  color: var(--mat-sys-primary, #006494);
+  font-weight: 700;
+}

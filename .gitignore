@@ -1,0 +1,27 @@
+# Environment secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+*.sqlite3
+
+# Django
+backend/staticfiles/
+backend/media/
+
+# Node / Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Docker
+*.log

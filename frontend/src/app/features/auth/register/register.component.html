@@ -1,0 +1,50 @@
+<mat-card class="cp-auth-card cp-card">
+  <div class="cp-auth-header">
+    <mat-icon>person_add</mat-icon>
+    <h2>Join CivicPulse</h2>
+    <p class="cp-muted">Report issues, earn points, help your city.</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline" class="cp-full-width">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" autocomplete="username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="cp-full-width">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" autocomplete="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="cp-full-width">
+      <mat-label>Phone (optional)</mat-label>
+      <input matInput formControlName="phone" autocomplete="tel" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="cp-full-width">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [type]="hidePassword ? 'password' : 'text'"
+        formControlName="password"
+        autocomplete="new-password"
+      />
+      <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      <mat-hint>At least 8 characters</mat-hint>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" type="submit" class="cp-submit-btn" [disabled]="loading">
+      @if (loading) {
+        <mat-spinner diameter="20"></mat-spinner>
+      } @else {
+        Create account
+      }
+    </button>
+  </form>
+
+  <p class="cp-auth-footer cp-muted">
+    Already have an account? <a routerLink="/auth/login">Log in</a>
+  </p>
+</mat-card>

@@ -1,0 +1,74 @@
+.cp-profile-page {
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+.cp-profile-card {
+  padding: 24px;
+}
+
+.cp-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.cp-avatar mat-icon {
+  font-size: 56px;
+  width: 56px;
+  height: 56px;
+  color: var(--cp-text-muted);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cp-full-width {
+  width: 100%;
+}
+
+.cp-badges-section {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--cp-border);
+
+  h3 {
+    margin-top: 0;
+  }
+}
+
+.cp-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cp-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: white;
+}
+
+.tier-bronze {
+  background: #a97142;
+}
+.tier-silver {
+  background: #8c9199;
+}
+.tier-gold {
+  background: #d4a017;
+}

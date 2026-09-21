@@ -1,0 +1,123 @@
+.cp-issue-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--cp-text);
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cp-issue-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.cp-thumb {
+  position: relative;
+  height: 160px;
+  background: var(--cp-surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cp-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cp-thumb.empty mat-icon {
+  font-size: 42px;
+  width: 42px;
+  height: 42px;
+  color: var(--cp-text-muted);
+}
+
+.cp-severity {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: white;
+}
+.sev-low {
+  background: #66bb6a;
+}
+.sev-medium {
+  background: #ffa726;
+}
+.sev-high {
+  background: #ef5350;
+}
+
+.cp-body {
+  padding: 12px 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cp-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.cp-chip {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: var(--chip-color, #666);
+  background: color-mix(in srgb, var(--chip-color, #666) 16%, transparent);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cp-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cp-address {
+  margin: 0;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cp-footer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  font-size: 0.8rem;
+}
+
+.cp-footer button.active mat-icon {
+  color: var(--mat-sys-primary, #006494);
+}
+
+.cp-spacer {
+  flex: 1 1 auto;
+}
+
+.cp-reporter {
+  font-size: 0.72rem;
+}

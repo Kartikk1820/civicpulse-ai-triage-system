@@ -1,0 +1,22 @@
+<div class="cp-map-page">
+  <div class="cp-map-toolbar">
+    <h1>Issue Map</h1>
+
+    <mat-form-field appearance="outline" class="cp-filter-field">
+      <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]="selectedCategory" (selectionChange)="onFilterChange()">
+        <mat-option [value]="undefined">All</mat-option>
+        @for (c of categories; track c.id) {
+          <mat-option [value]="c.id">{{ c.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-button-toggle-group [value]="mode" (change)="setMode($event.value)">
+      <mat-button-toggle value="pins">Pins</mat-button-toggle>
+      <mat-button-toggle value="heat">Heatmap</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div id="cp-issues-map" class="cp-map-canvas cp-card"></div>
+</div>

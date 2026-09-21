@@ -1,0 +1,18 @@
+<div class="cp-leaderboard-page">
+  <h1><mat-icon inline>leaderboard</mat-icon> Civic Champions</h1>
+  <p class="cp-muted">Top citizens by points earned from resolved reports.</p>
+
+  @if (loading) {
+    <div class="cp-loading"><mat-spinner diameter="36"></mat-spinner></div>
+  } @else {
+    <ol class="cp-board cp-card">
+      @for (entry of entries; track entry.id; let i = $index) {
+        <li [class.me]="entry.id === auth.currentUser?.id">
+          <span class="cp-rank">{{ medal(i) || '#' + (i + 1) }}</span>
+          <span class="cp-name">{{ entry.username }}</span>
+          <span class="cp-points">{{ entry.points }} pts</span>
+        </li>
+      }
+    </ol>
+  }
+</div>
