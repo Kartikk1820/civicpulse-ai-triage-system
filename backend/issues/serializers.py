@@ -122,6 +122,21 @@ class IssueCreateSerializer(serializers.ModelSerializer):
         model = Issue
         fields = ["id", "title", "description", "category", "latitude", "longitude", "address", "images"]
 
+    def to_internal_value(self, data):
+        # Leaflet reports coordinates as full-precision floats (e.g. 29.83682060941784),
+        # but latitude/longitude are DecimalField(max_digits=9, decimal_places=6). Round to
+        # the column's 6-decimal precision (~0.11m) so high-precision map pins don't 400.
+        if hasattr(data, "copy"):
+            data = data.copy()
+            for key in ("latitude", "longitude"):
+                value = data.get(key)
+                if value not in (None, ""):
+                    try:
+                        data[key] = f"{float(value):.6f}"
+                    except (TypeError, ValueError):
+                        pass
+        return super().to_internal_value(data)
+
     def create(self, validated_data):
         images = validated_data.pop("images", [])
         request = self.context["request"]

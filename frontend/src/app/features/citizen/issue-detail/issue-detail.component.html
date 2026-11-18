@@ -125,13 +125,11 @@
           </mat-select>
         </mat-form-field>
 
-        <label class="cp-upload-resolution">
-          <input type="file" accept="image/*" hidden (change)="uploadResolutionPhoto($event)" />
-          <button type="button" mat-stroked-button>
-            <mat-icon>add_a_photo</mat-icon>
-            Upload Resolution Photo
-          </button>
-        </label>
+        <input #resolutionFileInput type="file" accept="image/*" hidden (change)="uploadResolutionPhoto($event)" />
+        <button type="button" mat-stroked-button class="cp-upload-resolution" (click)="resolutionFileInput.click()">
+          <mat-icon>add_a_photo</mat-icon>
+          Upload Resolution Photo
+        </button>
       </aside>
     }
   </div>

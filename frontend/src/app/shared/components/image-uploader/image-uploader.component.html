@@ -9,10 +9,8 @@
     <mat-icon>add_a_photo</mat-icon>
     <p>Drag &amp; drop photos here, or</p>
   }
-  <label class="cp-file-label">
-    <input type="file" accept="image/*" multiple hidden (change)="onFileInput($event)" />
-    <button type="button" mat-stroked-button>Choose Photos</button>
-  </label>
+  <input #fileInput type="file" accept="image/*" multiple hidden (change)="onFileInput($event)" />
+  <button type="button" mat-stroked-button (click)="fileInput.click()">Choose Photos</button>
   <p class="cp-hint cp-muted">Up to {{ maxFiles }} photos, JPG/PNG</p>
 </div>
 
